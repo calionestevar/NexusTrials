@@ -1,0 +1,3 @@
+[submodule "NexusTrials/Plugins/NexusQA"]
+	path = NexusTrials/Plugins/NexusQA
+	url = https://github.com/calionestevar/NexusQA.git

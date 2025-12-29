@@ -1,0 +1,60 @@
+# Unreal Engine
+Binaries/
+Intermediate/
+Saved/
+.vs/
+.vscode/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Build outputs
+Build/
+DerivedDataCache/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# User-specific
+DefaultEngine.ini.user
+DefaultGame.ini.user
+DefaultInput.ini.user
+DefaultEditor.ini.user
+
+# Plugin binaries (but keep source)
+Plugins/*/Binaries/
+Plugins/*/Intermediate/
+
+# Except for NexusQA which is a git submodule
+!Plugins/NexusQA/
+
+# Mac
+.AppleDouble/
+.LSOverride/
+
+# Node (if using any build tools)
+node_modules/
+package-lock.json
+
+# Environment
+.env
+.env.local
