@@ -4,7 +4,13 @@
 
 **A portfolio demonstration of enterprise-grade QA automation and AI validation frameworks applied to game development.**
 
-NexusTrials is a lightweight Unreal Engine 5.7 game project designed to showcase the **NexusQA** test automation framework and **OrionAI** AI validation system. Built by a 10-year QA automation veteran transitioning from medical imaging systems (Cerner) and agricultural technology (AGI SureTrack) into the gaming industry, this project demonstrates how enterprise testing practices and AI oversight can elevate game quality assurance.
+> **⏱️ Short on time?** See [PORTFOLIO.md](PORTFOLIO.md) for a recruiter-friendly overview (2-minute read).
+
+**Full details below** ↓
+
+---
+
+**Detailed description starts here:**
 
 ## Project Positioning
 
