@@ -1,3 +1,5 @@
+![NexusTrials Banner](banner.jpg)
+
 # NexusTrials
 
 **A portfolio demonstration of enterprise-grade QA automation and AI validation frameworks applied to game development.**
