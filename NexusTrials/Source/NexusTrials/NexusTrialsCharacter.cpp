@@ -235,3 +235,41 @@ void ANexusTrialsCharacter::ApplyPowerUp(EPowerUpState NewState)
 
     UE_LOG(LogTemp, Log, TEXT("Power-up applied: %s"), *UEnum::GetValueAsString(NewState));
 }
+
+void ANexusTrialsCharacter::DoMove_Implementation(float Forward, float Right)
+{
+    // Default implementation - can be overridden in Blueprint
+    if (Controller != nullptr)
+    {
+        const FRotator Rotation = Controller->GetControlRotation();
+        const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+        const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+        const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+        AddMovementInput(ForwardDirection, Forward);
+        AddMovementInput(RightDirection, Right);
+    }
+}
+
+void ANexusTrialsCharacter::DoLook_Implementation(float Pitch, float Yaw)
+{
+    // Default implementation - can be overridden in Blueprint
+    if (Controller != nullptr)
+    {
+        AddControllerYawInput(Yaw);
+        AddControllerPitchInput(Pitch);
+    }
+}
+
+void ANexusTrialsCharacter::DoJumpStart_Implementation()
+{
+    // Default implementation - can be overridden in Blueprint
+    Jump();
+}
+
+void ANexusTrialsCharacter::DoJumpEnd_Implementation()
+{
+    // Default implementation - can be overridden in Blueprint
+    StopJumping();
+}

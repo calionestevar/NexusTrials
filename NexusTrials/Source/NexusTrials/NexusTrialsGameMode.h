@@ -18,6 +18,12 @@ public:
 	
 	/** Constructor */
 	ANexusTrialsGameMode();
+
+	/** Called when the game begins */
+	virtual void BeginPlay() override;
+	
+	/** Tick to update live dashboard */
+	virtual void Tick(float DeltaTime) override;
 };
 
 

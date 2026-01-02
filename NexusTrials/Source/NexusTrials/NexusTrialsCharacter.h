@@ -132,6 +132,22 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	/** Blueprint event for movement - called when move input is received */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Input")
+	void DoMove(float Forward, float Right);
+
+	/** Blueprint event for look - called when look input is received */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Input")
+	void DoLook(float Pitch, float Yaw);
+
+	/** Blueprint event for jump start */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Input")
+	void DoJumpStart();
+
+	/** Blueprint event for jump end */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Input")
+	void DoJumpEnd();
+
 public:
 
 	//=== Health Management ===
