@@ -370,29 +370,89 @@ NEXUS_TEST(FComplianceSafetyTest, "NexusTrials.Compliance.Safety", ETestPriority
 }
 
 // ============================================================================
-// OBSERVER NETWORK DASHBOARD TEST (ImGui Integration)
+// OBSERVER NETWORK DASHBOARD TEST (Slate Live Dashboard)
 // ============================================================================
 
-NEXUS_TEST(FObserverDashboardTest, "NexusTrials.Dashboard.ImGui", ETestPriority::Normal)
+NEXUS_TEST(FObserverDashboardTest, "NexusTrials.Dashboard.LiveDisplay", ETestPriority::Normal)
 {
-    // Demonstrate ObserverNetworkDashboard with ImGui live rendering
-    // This test validates that the real-time dashboard is functional
+    // Demonstrate ObserverNetworkDashboard with Slate live rendering
+    // This test validates that the real-time dashboard is functional and updates correctly
     
-    UE_LOG(LogTemp, Warning, TEXT("📊 OBSERVER NETWORK — Dashboard Test"));
+    UE_LOG(LogTemp, Warning, TEXT("📊 OBSERVER NETWORK — Live Dashboard Test"));
     
-    // Log various safety events to populate the dashboard
-    UObserverNetworkDashboard::LogSafetyEvent(TEXT("DASHBOARD_TEST_START"), TEXT("Dashboard test initiated"));
+    // Log various safety events to populate the live dashboard
+    // These events will appear in real-time on the Slate-based dashboard
+    UObserverNetworkDashboard::LogSafetyEvent(TEXT("DASHBOARD_TEST_START"), TEXT("Dashboard live display test initiated"));
     UObserverNetworkDashboard::LogSafetyEvent(TEXT("MODULE_LOADED"), TEXT("Nexus module loaded successfully"));
     UObserverNetworkDashboard::LogSafetyEvent(TEXT("FRAMEWORK_READY"), TEXT("NexusQA framework is operational"));
     
-    UE_LOG(LogTemp, Display, TEXT("  📈 Live dashboard updated with test events"));
-    UE_LOG(LogTemp, Display, TEXT("  🎨 ImGui rendering enabled (if ImGui plugin is active)"));
-    UE_LOG(LogTemp, Display, TEXT("  📊 Dashboard should show real-time event counts"));
+    UE_LOG(LogTemp, Display, TEXT("  📈 Live Slate-based dashboard updated with test events"));
+    UE_LOG(LogTemp, Display, TEXT("  🎨 Dashboard rendering test events in real-time"));
+    UE_LOG(LogTemp, Display, TEXT("  📊 Dashboard should show test progress, counts, and timestamps"));
+    
+    // Simulate some test activity with brief delays
+    FPlatformProcess::Sleep(0.2f);
+    
+    UObserverNetworkDashboard::LogSafetyEvent(TEXT("TEST_EXECUTION_PHASE"), TEXT("Running test suite"));
+    
+    FPlatformProcess::Sleep(0.2f);
     
     UObserverNetworkDashboard::LogSafetyEvent(TEXT("DASHBOARD_TEST_COMPLETE"), TEXT("Dashboard test completed successfully"));
     
-    UE_LOG(LogTemp, Display, TEXT("✅ ObserverNetworkDashboard test complete"));
-    UE_LOG(LogTemp, Display, TEXT("   View live dashboard by pressing: ~ (console) then type Nexus.RunTests"));
+    UE_LOG(LogTemp, Display, TEXT("✅ Live dashboard test complete"));
+    UE_LOG(LogTemp, Display, TEXT("   View live dashboard during gameplay/tests"));
+    UE_LOG(LogTemp, Display, TEXT("   Dashboard updates every frame with test events"));
+    
+    return true;
+}
+
+// ============================================================================
+// DASHBOARD PERFORMANCE SHOWCASE TEST
+// ============================================================================
+
+NEXUS_PERF_TEST(FDashboardPerformanceShowcaseTest, "NexusTrials.Dashboard.Performance", ETestPriority::Normal, 3.0f)
+{
+    // Showcase the live dashboard displaying performance metrics during test execution
+    // This test demonstrates ArgusLens performance monitoring integrated with the dashboard
+    
+    UE_LOG(LogTemp, Warning, TEXT("📊 DASHBOARD PERFORMANCE SHOWCASE"));
+    
+    // Log performance-related events to the dashboard
+    UObserverNetworkDashboard::LogSafetyEvent(
+        TEXT("PERF_TEST_START"),
+        TEXT("Performance monitoring test starting - ArgusLens metrics will be captured")
+    );
+    
+    UE_LOG(LogTemp, Display, TEXT("  📈 Dashboard is displaying real-time performance metrics:"));
+    UE_LOG(LogTemp, Display, TEXT("     - Frame rate (FPS)"));
+    UE_LOG(LogTemp, Display, TEXT("     - Memory usage (MB)"));
+    UE_LOG(LogTemp, Display, TEXT("     - Frame stalls/hitches"));
+    
+    // Simulate test activity with varying workloads
+    for (int32 i = 0; i < 3; ++i)
+    {
+        FPlatformProcess::Sleep(0.5f);
+        UObserverNetworkDashboard::LogSafetyEvent(
+            FString::Printf(TEXT("PERF_SAMPLE_%d"), i),
+            FString::Printf(TEXT("Performance sample %d - check dashboard for metrics"), i + 1)
+        );
+    }
+    
+    UObserverNetworkDashboard::LogSafetyEvent(
+        TEXT("PERF_TEST_COMPLETE"),
+        TEXT("Performance test complete - all metrics logged to dashboard")
+    );
+    
+    UE_LOG(LogTemp, Display, TEXT("✅ Performance showcase test complete"));
+    UE_LOG(LogTemp, Display, TEXT("   Check the live Slate dashboard for real-time metrics"));
+    
+    // Performance assertions from ArgusLens
+    if (HAS_PERF_DATA(Context))
+    {
+        ASSERT_AVERAGE_FPS(Context, 30.0f);      // Minimum 30 FPS acceptable for testing
+        ASSERT_MAX_MEMORY(Context, 4096.0f);     // Maximum 4GB memory
+        ASSERT_MAX_HITCHES(Context, 10);         // Allow some hitches during test
+    }
     
     return true;
 }

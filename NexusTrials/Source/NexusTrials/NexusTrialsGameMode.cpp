@@ -14,6 +14,11 @@ void ANexusTrialsGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Initialize observer dashboard with Slate backend for live test monitoring
+	// Slate is the native Unreal UI framework and always available (no plugin required)
+	UObserverNetworkDashboard::Initialize(EDashboardBackend::Slate);
+	UE_LOG(LogTemp, Display, TEXT("✅ Observer Network Dashboard initialized (Slate backend)"));
+
 	// Check if tests are running (Nexus framework sets this during test execution)
 	// Skip full observer network in test mode to avoid Palantir HTTP issues
 	bool bIsTestMode = FParse::Param(FCommandLine::Get(), TEXT("TestMode")) || 
@@ -30,15 +35,13 @@ void ANexusTrialsGameMode::BeginPlay()
 	{
 		UE_LOG(LogTemp, Display, TEXT("⚠️ Test mode detected — Skipping observer network HTTP tracing"));
 	}
-	
-	// Initialize observer dashboard for live event tracking
-	UObserverNetworkDashboard::Initialize();
 }
 
 void ANexusTrialsGameMode::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	// Update live dashboard every frame (ImGui rendering)
+	// Update live Slate-based dashboard every frame during test execution
+	// Displays real-time test progress, pass/fail counts, and performance metrics
 	UObserverNetworkDashboard::UpdateLiveDashboard();
 }
