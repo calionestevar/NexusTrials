@@ -11,9 +11,9 @@ Show game studios that professional-grade test frameworks and AI validation can 
 A lightweight Unreal Engine 5.7 project with **3 playable variants** that intentionally keeps gameplay simple so the **testing framework is the star**.
 
 ### The Framework Integration
-- **NexusQA**: Automated test orchestration (your proprietary framework)
+- **[NexusQA](https://github.com/calionestevar/NexusQA)**: Automated test orchestration and distributed tracing
 - **Distributed Testing**: Multi-server load testing and chaos injection
-- **AI Validation**: Behavior verification and anomaly detection
+- **AI Validation**: Behavior verification and anomaly detection (OrionAI coming soon)
 - **Compliance**: Medical/automotive-grade testing patterns adapted for games
 
 ## Why This Matters
@@ -76,4 +76,6 @@ This project demonstrates:
 
 **Full documentation**: See [README.md](README.md) for complete project details, setup instructions, and framework documentation.
 
-**Framework source**: [NexusQA on GitHub](https://github.com/calionestevar/NexusQA)
+**Frameworks & Integration**:
+- **[NexusQA](https://github.com/calionestevar/NexusQA)** - Test automation framework with distributed tracing, performance metrics, and chaos engineering
+- **OrionAI** - AI validation system (coming soon)
