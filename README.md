@@ -63,8 +63,11 @@ Precision platformer with:
 - **Engine**: Unreal Engine 5.7
 - **Language**: C++
 - **QA Frameworks**: 
-  - [NexusQA](https://github.com/calionestevar/NexusQA) - Test automation framework (Git submodule)
-  - OrionAI - AI validation and anomaly detection system
+  - **[NexusQA](https://github.com/calionestevar/NexusQA)** - Test automation framework (Git submodule)
+    - Automated test discovery and execution
+    - Distributed tracing and performance metrics
+    - Chaos engineering and network fault injection
+  - **OrionAI** - AI validation and anomaly detection system (Coming soon)
 - **Testing Capabilities**: Automated QA, distributed tracing, chaos engineering, performance analysis
 - **State Management**: StateTree, GameplayStateTree
 - **Build System**: UnrealBuildTool with Visual Studio 2022 Community
@@ -267,7 +270,7 @@ NEXUS_TEST_GAMETHREAD(FHealthTest, "NexusTrials.Character.Health", ETestPriority
 }
 ```
 
-Check `Plugins/NexusQA/` for detailed framework documentation.
+Check the **[NexusQA framework documentation](https://github.com/calionestevar/NexusQA)** for detailed framework documentation, API reference, and advanced testing patterns.
 
 ## Performance
 
@@ -329,10 +332,19 @@ For pull requests: This is primarily a portfolio showcase, but improvements to t
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Related Projects
+## Related Projects & Frameworks
 
-- **[NexusQA](https://github.com/calionestevar/NexusQA)** - Testing framework used by this project
-- **[Unreal Engine](https://github.com/EpicGames/UnrealEngine)** - Core engine repository
+- **[NexusQA](https://github.com/calionestevar/NexusQA)** - Test automation framework used by this project
+  - Distributed test execution and reporting
+  - Performance metrics and profiling
+  - Chaos engineering and network fault injection
+  
+- **OrionAI** - AI validation and anomaly detection (Coming soon)
+  - Behavior verification for game systems
+  - Anomaly detection in player data
+  - AI-powered test scenario generation
+
+- **[Unreal Engine 5.7](https://github.com/EpicGames/UnrealEngine)** - Core engine repository
 
 ## Contact & Support
 
