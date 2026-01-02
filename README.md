@@ -238,13 +238,36 @@ Launch any variant from the editor:
 ### Automated Testing
 
 Run automated tests through NexusQA:
-```cpp
-// In a test commandlet or blueprint:
-UFringeNetwork::ActivateObserverNetwork();
-UFringeNetwork::RunObserverNetworkTests(TEXT("http://localhost:8080"));
+```bash
+# In the Unreal Editor console:
+Nexus.RunTests
 ```
 
-Check `Plugins/NexusQA/` for detailed testing documentation.
+#### Test Patterns
+
+NexusTrials demonstrates three test patterns with enterprise architecture:
+
+**1. NEXUS_TEST** - Parallel-safe unit tests (thread pool execution)
+**2. NEXUS_TEST_GAMETHREAD** - Game-thread tests with FNexusTestContext
+**3. NEXUS_PERF_TEST** - Performance tests with ArgusLens metrics
+
+Example with FNexusTestContext pattern:
+```cpp
+NEXUS_TEST_GAMETHREAD(FHealthTest, "NexusTrials.Character.Health", ETestPriority::Critical)
+{
+    if (!Context.IsValid()) return false;
+    
+    ANexusTrialsCharacter* Char = Context.SpawnTestCharacter(
+        ANexusTrialsCharacter::StaticClass(), 
+        FVector(0, 0, 100)
+    );
+    
+    return Char->GetCurrentHealth() > 0.0f;
+    // Actors automatically destroyed when Context scope ends (RAII)
+}
+```
+
+Check `Plugins/NexusQA/` for detailed framework documentation.
 
 ## Performance
 
@@ -334,6 +357,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 
 ## Changelog
+
+### v1.1.0 (2026-01-02)
+- **Refactored all GAMETHREAD tests to use FNexusTestContext pattern**
+  - Context.SpawnTestCharacter() for managed actor creation
+  - Automatic cleanup via RAII destructors
+  - Context.PerformanceMetrics for performance assertions
+- Updated NexusQA framework with ArgusLens performance metrics integration
+- Added NEXUS_PERF_TEST macro for performance validation tests
+- Enhanced ObserverNetworkDashboard integration for test reporting
 
 ### v1.0.0 (2025-12-28)
 - Initial project recovery and reconstruction
