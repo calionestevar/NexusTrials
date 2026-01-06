@@ -21,8 +21,7 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsHealthSystemTest, "NexusTrials.Character.Healt
     // Use FNexusTestContext for guaranteed valid world and automatic cleanup
     if (!Context.IsValid())
     {
-        UE_LOG(LogTemp, Warning, TEXT("⚠️ Health Test: Skipping - no active game world (run 'play' first)"));
-        return true;  // Skip gracefully instead of failing
+        NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
 
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(0, 0, 100)));
@@ -55,8 +54,7 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsDamageTest, "NexusTrials.Character.DamageAppli
     // Validate damage system works correctly
     if (!Context.IsValid())
     {
-        UE_LOG(LogTemp, Warning, TEXT("⚠️ Damage Test: Skipping - no active game world (run 'play' first)"));
-        return true;  // Skip gracefully instead of failing
+        NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
 
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(100, 0, 100)));
@@ -93,11 +91,8 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsPowerUpTest, "NexusTrials.PowerUps.Application
     // Validate power-up system state changes
     if (!Context.IsValid())
     {
-        UE_LOG(LogTemp, Warning, TEXT("⚠️ Power-Up Test: Skipping - no active game world (run 'play' first)"));
-        return true;  // Skip gracefully instead of failing
+        NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
-
-    ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(200, 0, 100)));
     if (!Character) return false;
 
     // Test mushroom power-up
@@ -125,8 +120,7 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsStarInvincibilityTest, "NexusTrials.PowerUps.S
     // Validate star power prevents damage
     if (!Context.IsValid())
     {
-        UE_LOG(LogTemp, Warning, TEXT("⚠️ Star Invincibility Test: Skipping - no active game world (run 'play' first)"));
-        return true;  // Skip gracefully instead of failing
+        NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
 
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(300, 0, 100)));
@@ -226,8 +220,7 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsFullIntegrationTest, "NexusTrials.Integration.
     // Comprehensive test validating character system works with framework monitoring
     if (!Context.IsValid())
     {
-        UE_LOG(LogTemp, Warning, TEXT("⚠️ Integration Test: Skipping - no active game world (run 'play' first)"));
-        return true;  // Skip gracefully instead of failing
+        NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
 
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(400, 0, 100)));
