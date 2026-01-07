@@ -13,6 +13,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/DamageEvents.h"
 
+// Include ability classes for power-ups
+#include "Abilities/MushroomeAbility.h"
+#include "Abilities/FireFlowerAbility.h"
+#include "Abilities/StarInvincibilityAbility.h"
+
 // Include the pure calculator helper
 #include "Public/FFallDamageCalculator.h"
 
@@ -222,22 +227,59 @@ void ANexusTrialsCharacter::ResetCollections()
 
 void ANexusTrialsCharacter::ApplyPowerUp(EPowerUpState NewState)
 {
+    if (!AbilityComponent)
+    {
+        return;
+    }
+
     CurrentPowerUpState = NewState;
 
-    bHasMushroom = (NewState == EPowerUpState::Mushroom);
-    bHasFireFlower = (NewState == EPowerUpState::FireFlower);
-    bHasStar = (NewState == EPowerUpState::Star);
+    // Deactivate current power-ups before applying new one
+    bHasMushroom = false;
+    bHasFireFlower = false;
+    bHasStar = false;
 
-    if (bHasStar)
+    switch (NewState)
     {
-        GetWorldTimerManager().SetTimer(
-            StarTimerHandle,
-            this,
-            &ANexusTrialsCharacter::EndStarInvincibility,
-            StarInvincibilityDuration,
-            false
-        );
-        UE_LOG(LogTemp, Warning, TEXT("★ STAR POWER ACTIVATED — Invincible for %.1f sec ★"), StarInvincibilityDuration);
+        case EPowerUpState::Mushroom:
+        {
+            // Add and activate Mushroom ability
+            if (!AbilityComponent->GetAbility(UMushroomeAbility::StaticClass()))
+            {
+                AbilityComponent->AddAbility(UMushroomeAbility::StaticClass());
+            }
+            AbilityComponent->ActivateAbility(UMushroomeAbility::StaticClass());
+            bHasMushroom = true;
+            break;
+        }
+        case EPowerUpState::FireFlower:
+        {
+            // Add and activate FireFlower ability
+            if (!AbilityComponent->GetAbility(UFireFlowerAbility::StaticClass()))
+            {
+                AbilityComponent->AddAbility(UFireFlowerAbility::StaticClass());
+            }
+            AbilityComponent->ActivateAbility(UFireFlowerAbility::StaticClass());
+            bHasFireFlower = true;
+            break;
+        }
+        case EPowerUpState::Star:
+        {
+            // Add and activate Star Invincibility ability
+            if (!AbilityComponent->GetAbility(UStarInvincibilityAbility::StaticClass()))
+            {
+                AbilityComponent->AddAbility(UStarInvincibilityAbility::StaticClass());
+            }
+            AbilityComponent->ActivateAbility(UStarInvincibilityAbility::StaticClass());
+            bHasStar = true;
+            break;
+        }
+        case EPowerUpState::Small:
+        default:
+        {
+            // Return to normal state - no special ability
+            break;
+        }
     }
 
     UE_LOG(LogTemp, Log, TEXT("Power-up applied: %s"), *UEnum::GetValueAsString(NewState));

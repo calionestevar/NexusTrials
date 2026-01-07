@@ -1,0 +1,52 @@
+#include "Abilities/FireFlowerAbility.h"
+#include "NexusTrialsCharacter.h"
+#include "Attributes/NexusAttributeComponent.h"
+
+UFireFlowerAbility::UFireFlowerAbility()
+{
+    AbilityName = TEXT("Fire Flower Power-Up");
+    CooldownDuration = 0.0f;
+    DamageAmount = 1.5f;  // Base damage for fire attacks
+}
+
+bool UFireFlowerAbility::OnActivate_Implementation(APawn* Instigator, AActor* Target)
+{
+    ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Instigator);
+    if (!Character)
+    {
+        return false;
+    }
+
+    // Store original damage
+    UNexusAttributeComponent* AttrComp = Character->GetAttributeComponent();
+    if (AttrComp && AttrComp->GetAttributeSet())
+    {
+        OriginalDamage = AttrComp->GetAttributeSet()->Damage.GetValue();
+        
+        // Apply damage multiplier
+        float NewDamage = OriginalDamage * DamageMultiplier;
+        AttrComp->GetAttributeSet()->Damage.SetBaseValue(NewDamage);
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("🔥 Fire Flower Power-Up Activated! Damage: x%.1f"), DamageMultiplier);
+
+    return true;
+}
+
+void UFireFlowerAbility::OnDeactivate_Implementation(APawn* Instigator)
+{
+    ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Instigator);
+    if (!Character)
+    {
+        return;
+    }
+
+    // Restore original damage
+    UNexusAttributeComponent* AttrComp = Character->GetAttributeComponent();
+    if (AttrComp && AttrComp->GetAttributeSet())
+    {
+        AttrComp->GetAttributeSet()->Damage.SetBaseValue(OriginalDamage);
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("🔥 Fire Flower Power-Up Deactivated!"));
+}
