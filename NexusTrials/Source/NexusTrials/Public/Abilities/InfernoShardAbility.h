@@ -2,32 +2,32 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/NexusAbility.h"
-#include "FireFlowerAbility.generated.h"
+#include "InfernoShardAbility.generated.h"
 
 /**
- * FireFlowerAbility - Grants ranged attack capability
+ * InfernoShardAbility - Grants ranged attack capability with increased damage
  * 
  * Effects:
  * - Enables ranged fire projectile attacks
- * - Increased damage output
+ * - Increased damage output (2x multiplier)
  * - Can be used multiple times (ability stays active)
  * 
  * Future Enhancement: Could spawn projectiles on fire input
  */
 UCLASS()
-class NEXUSTRIALS_API UFireFlowerAbility : public UNexusAbility
+class NEXUSTRIALS_API UInfernoShardAbility : public UNexusAbility
 {
     GENERATED_BODY()
 
 public:
-    UFireFlowerAbility();
+    UInfernoShardAbility();
 
     /** Damage multiplier for ranged attacks */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FireFlower")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfernoShard")
     float DamageMultiplier = 2.0f;
 
     /** Projectile spawn offset from character */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FireFlower")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InfernoShard")
     FVector ProjectileOffset = FVector(100.0f, 0.0f, 50.0f);
 
 protected:

@@ -21,9 +21,9 @@ UENUM(BlueprintType)
 enum class EPowerUpState : uint8
 {
 	Small = 0 UMETA(DisplayName = "Small"),
-	Mushroom = 1 UMETA(DisplayName = "Mushroom"),
-	FireFlower = 2 UMETA(DisplayName = "Fire Flower"),
-	Star = 3 UMETA(DisplayName = "Star (Invincible)")
+	VigorSeed = 1 UMETA(DisplayName = "Vigor Seed"),
+	InfernoShard = 2 UMETA(DisplayName = "Inferno Shard"),
+	AegisCharm = 3 UMETA(DisplayName = "Aegis Charm")
 };
 
 /**
@@ -121,6 +121,12 @@ public:
 
 	/** Tick for physics and damage calculation */
 	virtual void Tick(float DeltaTime) override;
+
+	/** Set invincibility state (for abilities) */
+	FORCEINLINE void SetInvincible(bool bNewInvincible) { bHasStar = bNewInvincible; }
+
+	/** Get invincibility state (for abilities) */
+	FORCEINLINE bool IsInvincible() const { return bHasStar; }
 
 protected:
 

@@ -14,9 +14,9 @@
 #include "Engine/DamageEvents.h"
 
 // Include ability classes for power-ups
-#include "Abilities/MushroomeAbility.h"
-#include "Abilities/FireFlowerAbility.h"
-#include "Abilities/StarInvincibilityAbility.h"
+#include "Abilities/VigorSeedAbility.h"
+#include "Abilities/InfernoShardAbility.h"
+#include "Abilities/AegisCarmAbility.h"
 
 // Include the pure calculator helper
 #include "Public/FFallDamageCalculator.h"
@@ -241,36 +241,36 @@ void ANexusTrialsCharacter::ApplyPowerUp(EPowerUpState NewState)
 
     switch (NewState)
     {
-        case EPowerUpState::Mushroom:
+        case EPowerUpState::VigorSeed:
         {
-            // Add and activate Mushroom ability
-            if (!AbilityComponent->GetAbility(UMushroomeAbility::StaticClass()))
+            // Add and activate Vigor Seed ability
+            if (!AbilityComponent->GetAbility(UVigorSeedAbility::StaticClass()))
             {
-                AbilityComponent->AddAbility(UMushroomeAbility::StaticClass());
+                AbilityComponent->AddAbility(UVigorSeedAbility::StaticClass());
             }
-            AbilityComponent->ActivateAbility(UMushroomeAbility::StaticClass());
+            AbilityComponent->ActivateAbility(UVigorSeedAbility::StaticClass());
             bHasMushroom = true;
             break;
         }
-        case EPowerUpState::FireFlower:
+        case EPowerUpState::InfernoShard:
         {
-            // Add and activate FireFlower ability
-            if (!AbilityComponent->GetAbility(UFireFlowerAbility::StaticClass()))
+            // Add and activate Inferno Shard ability
+            if (!AbilityComponent->GetAbility(UInfernoShardAbility::StaticClass()))
             {
-                AbilityComponent->AddAbility(UFireFlowerAbility::StaticClass());
+                AbilityComponent->AddAbility(UInfernoShardAbility::StaticClass());
             }
-            AbilityComponent->ActivateAbility(UFireFlowerAbility::StaticClass());
+            AbilityComponent->ActivateAbility(UInfernoShardAbility::StaticClass());
             bHasFireFlower = true;
             break;
         }
-        case EPowerUpState::Star:
+        case EPowerUpState::AegisCharm:
         {
-            // Add and activate Star Invincibility ability
-            if (!AbilityComponent->GetAbility(UStarInvincibilityAbility::StaticClass()))
+            // Add and activate Aegis Charm ability
+            if (!AbilityComponent->GetAbility(UAegisCarmAbility::StaticClass()))
             {
-                AbilityComponent->AddAbility(UStarInvincibilityAbility::StaticClass());
+                AbilityComponent->AddAbility(UAegisCarmAbility::StaticClass());
             }
-            AbilityComponent->ActivateAbility(UStarInvincibilityAbility::StaticClass());
+            AbilityComponent->ActivateAbility(UAegisCarmAbility::StaticClass());
             bHasStar = true;
             break;
         }

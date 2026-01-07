@@ -1,16 +1,16 @@
-#include "Abilities/MushroomeAbility.h"
+#include "Abilities/VigorSeedAbility.h"
 #include "NexusTrialsCharacter.h"
 #include "Attributes/NexusAttributeComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-UMushroomeAbility::UMushroomeAbility()
+UVigorSeedAbility::UVigorSeedAbility()
 {
-    AbilityName = TEXT("Mushroom Power-Up");
+    AbilityName = TEXT("Vigor Seed Power-Up");
     CooldownDuration = 0.0f;  // No cooldown for power-ups
     DamageAmount = 0.0f;       // Doesn't deal damage
 }
 
-bool UMushroomeAbility::OnActivate_Implementation(APawn* Instigator, AActor* Target)
+bool UVigorSeedAbility::OnActivate_Implementation(APawn* Instigator, AActor* Target)
 {
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Instigator);
     if (!Character)
@@ -36,12 +36,12 @@ bool UMushroomeAbility::OnActivate_Implementation(APawn* Instigator, AActor* Tar
     FVector NewScale = OriginalScale * ScaleMultiplier;
     Character->SetActorScale3D(NewScale);
 
-    UE_LOG(LogTemp, Warning, TEXT("🍄 Mushroom Power-Up Activated! Scale: %.1f, Health: +%.0f"), ScaleMultiplier, HealthBonus);
+    UE_LOG(LogTemp, Warning, TEXT("🌱 Vigor Seed Power-Up Activated! Scale: %.1f, Health: +%.0f"), ScaleMultiplier, HealthBonus);
 
     return true;
 }
 
-void UMushroomeAbility::OnDeactivate_Implementation(APawn* Instigator)
+void UVigorSeedAbility::OnDeactivate_Implementation(APawn* Instigator)
 {
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Instigator);
     if (!Character)
@@ -59,5 +59,5 @@ void UMushroomeAbility::OnDeactivate_Implementation(APawn* Instigator)
         AttrComp->SetMaxHealth(OriginalMaxHealth);
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("🍄 Mushroom Power-Up Deactivated!"));
+    UE_LOG(LogTemp, Warning, TEXT("🌱 Vigor Seed Power-Up Deactivated!"));
 }

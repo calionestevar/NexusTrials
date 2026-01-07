@@ -93,14 +93,21 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsPowerUpTest, "NexusTrials.PowerUps.Application
     {
         NEXUS_SKIP_TEST("No active game world - run 'Play' in editor first to test with PIE");
     }
+
+    // Get character from player controller
+    ANexusTrialsCharacter* Character = nullptr;
+    if (Context.PlayerController)
+    {
+        Character = Cast<ANexusTrialsCharacter>(Context.PlayerController->GetPawn());
+    }
     if (!Character) return false;
 
-    // Test mushroom power-up
+    // Test vigor seed power-up
     EPowerUpState InitialState = Character->GetPowerUpState();
-    Character->ApplyPowerUp(EPowerUpState::Mushroom);
+    Character->ApplyPowerUp(EPowerUpState::VigorSeed);
     EPowerUpState NewState = Character->GetPowerUpState();
 
-    bool bPowerUpApplied = (NewState == EPowerUpState::Mushroom);
+    bool bPowerUpApplied = (NewState == EPowerUpState::VigorSeed);
 
     if (bPowerUpApplied)
     {
@@ -126,7 +133,7 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsStarInvincibilityTest, "NexusTrials.PowerUps.S
     ANexusTrialsCharacter* Character = Cast<ANexusTrialsCharacter>(Context.SpawnTestCharacter(ANexusTrialsCharacter::StaticClass(), FVector(300, 0, 100)));
     if (!Character) return false;
 
-    Character->ApplyPowerUp(EPowerUpState::Star);
+    Character->ApplyPowerUp(EPowerUpState::AegisCharm);
     float HealthBeforeStar = Character->GetCurrentHealth();
 
     // Try to apply damage while star is active
@@ -234,13 +241,13 @@ NEXUS_TEST_GAMETHREAD(FNexusTrialsFullIntegrationTest, "NexusTrials.Integration.
     float HealthAfterDamage = Character->GetCurrentHealth();
 
     // Apply power-up
-    Character->ApplyPowerUp(EPowerUpState::FireFlower);
+    Character->ApplyPowerUp(EPowerUpState::InfernoShard);
     EPowerUpState PowerUpState = Character->GetPowerUpState();
 
     bool bIntegrationValid = (
         InitialHealth > 0.0f &&
         HealthAfterDamage < InitialHealth &&
-        PowerUpState == EPowerUpState::FireFlower
+        PowerUpState == EPowerUpState::InfernoShard
     );
 
     if (bIntegrationValid)

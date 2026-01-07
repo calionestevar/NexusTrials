@@ -32,9 +32,9 @@ void AGrumblin::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Othe
 {
     if (ANexusTrialsCharacter* Player = Cast<ANexusTrialsCharacter>(OtherActor))
     {
-        if (Player->GetPowerUpState() == EPowerUpState::Star)
+        if (Player->GetPowerUpState() == EPowerUpState::AegisCharm)
         {
-            Destroy(); // Star kills Grumblin
+            Destroy(); // Aegis Charm kills Grumblin
         }
         else
         {

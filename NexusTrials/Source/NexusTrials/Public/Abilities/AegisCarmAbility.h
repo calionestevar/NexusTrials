@@ -2,12 +2,12 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/NexusAbility.h"
-#include "StarInvincibilityAbility.generated.h"
+#include "AegisCarmAbility.generated.h"
 
 class ANexusTrialsCharacter;
 
 /**
- * StarInvincibilityAbility - Grants temporary invincibility
+ * AegisCarmAbility - Grants temporary protection and invincibility
  * 
  * Effects:
  * - Character becomes invincible (blocks all damage)
@@ -18,15 +18,15 @@ class ANexusTrialsCharacter;
  * Future: Could add visual effects (glow), audio cues, particle effects
  */
 UCLASS()
-class NEXUSTRIALS_API UStarInvincibilityAbility : public UNexusAbility
+class NEXUSTRIALS_API UAegisCarmAbility : public UNexusAbility
 {
     GENERATED_BODY()
 
 public:
-    UStarInvincibilityAbility();
+    UAegisCarmAbility();
 
     /** Duration of invincibility in seconds */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StarInvincibility", meta = (ClampMin = 1, ClampMax = 60))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AegisCharm", meta = (ClampMin = 1, ClampMax = 60))
     float InvincibilityDuration = 10.0f;
 
     /**
@@ -43,11 +43,9 @@ private:
     /** Timer handle for tracking invincibility duration */
     FTimerHandle InvincibilityTimerHandle;
 
-    /** Weak reference to prevent invalid pointer access */
-    TWeakObjectPtr<APawn> InstigatorRef;
-
-    /**
-     * Internal callback when duration expires
-     */
+    /** Callback when invincibility duration expires */
     void OnInvincibilityExpired();
+
+    /** Weak reference to instigator to prevent dangling pointers */
+    TWeakObjectPtr<APawn> InstigatorRef;
 };

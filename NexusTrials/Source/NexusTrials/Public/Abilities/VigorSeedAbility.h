@@ -2,10 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/NexusAbility.h"
-#include "MushroomeAbility.generated.h"
+#include "VigorSeedAbility.generated.h"
 
 /**
- * MushroomeAbility - Grants temporary growth and increased health
+ * VigorSeedAbility - Grants temporary growth and increased health
  * 
  * Effects:
  * - Scales character up (mesh scale)
@@ -16,19 +16,19 @@
  * Just create new ability class, no core character code changes needed
  */
 UCLASS()
-class NEXUSTRIALS_API UMushroomeAbility : public UNexusAbility
+class NEXUSTRIALS_API UVigorSeedAbility : public UNexusAbility
 {
     GENERATED_BODY()
 
 public:
-    UMushroomeAbility();
+    UVigorSeedAbility();
 
     /** Scale multiplier when ability is active */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mushroom")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VigorSeed")
     float ScaleMultiplier = 1.5f;
 
     /** Extra health granted */
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mushroom")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VigorSeed")
     float HealthBonus = 50.0f;
 
 protected:
