@@ -21,7 +21,6 @@ ANexusTrialsCharacter::ANexusTrialsCharacter()
 {
     // Default health
     MaxHealth = 100.0f;
-    CurrentHealth = MaxHealth;
 
     // init fall damage timer
     FallDamageTimer = 0.0f;
@@ -43,6 +42,13 @@ ANexusTrialsCharacter::ANexusTrialsCharacter()
     GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
     GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+
+    // Create attribute component for health management
+    AttributeComponent = CreateDefaultSubobject<UNexusAttributeComponent>(TEXT("AttributeComponent"));
+    AttributeComponent->SetMaxHealth(MaxHealth);
+
+    // Create ability component for ability management
+    AbilityComponent = CreateDefaultSubobject<UNexusAbilityComponent>(TEXT("AbilityComponent"));
 
     // Create a camera boom
     CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -139,26 +145,28 @@ void ANexusTrialsCharacter::Look(const FInputActionValue& Value)
 
 float ANexusTrialsCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-    // Star power blocks ALL damage
+    // Star power blocks ALL damage (legacy system - will be moved to ability in next phase)
     if (bHasStar && DamageAmount > 0.f)
     {
         UE_LOG(LogTemp, Log, TEXT("Star invincibility blocked %.1f damage!"), DamageAmount);
         return 0.f;
     }
 
-    const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-
-    if (ActualDamage > 0.f)
+    // Delegate to AttributeComponent for actual damage handling
+    if (AttributeComponent)
     {
-        CurrentHealth = FMath::Clamp(CurrentHealth - ActualDamage, 0.0f, MaxHealth);
-
-        if (CurrentHealth <= 0.0f)
+        float ActualDamage = AttributeComponent->TakeDamage(DamageAmount);
+        
+        // Log if character died
+        if (AttributeComponent->IsDead())
         {
-            UE_LOG(LogNexusTrials, Warning, TEXT("Player died!"));
-            // In a real game: trigger death animation, respawn, etc.
+            UE_LOG(LogNexusTrials, Warning, TEXT("Player died from %.1f damage!"), ActualDamage);
         }
+        
+        return ActualDamage;
     }
-    return ActualDamage;
+
+    return 0.f;
 }
 
 void ANexusTrialsCharacter::TakeDamage(float Damage)
@@ -166,7 +174,6 @@ void ANexusTrialsCharacter::TakeDamage(float Damage)
     FDamageEvent DamageEvent;
     TakeDamage(Damage, DamageEvent, nullptr, nullptr);
 }
-
 void ANexusTrialsCharacter::Die()
 {
     // Simple death: respawn or game over

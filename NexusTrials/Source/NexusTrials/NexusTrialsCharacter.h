@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Attributes/NexusAttributeComponent.h"
+#include "Abilities/NexusAbilityComponent.h"
 #include "NexusTrialsCharacter.generated.h"
 
 class USpringArmComponent;
@@ -41,6 +43,14 @@ class NEXUSTRIALS_API ANexusTrialsCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+
+	/** Attribute component manages health and stats */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UNexusAttributeComponent* AttributeComponent;
+
+	/** Ability component manages all character abilities */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
+	UNexusAbilityComponent* AbilityComponent;
 	
 protected:
 
@@ -62,13 +72,9 @@ protected:
 
 	//=== Health and Stats ===
 	
-	/** Maximum health the player can have */
+	/** Maximum health the player can have (managed by AttributeComponent) */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Health", meta = (ClampMin = 1, ClampMax = 200))
 	float MaxHealth = 100.0f;
-
-	/** Current health value */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Health")
-	float CurrentHealth = 0.0f;
 
 	/** Fall damage timer for accumulating damage */
 	float FallDamageTimer = 0.0f;
@@ -161,11 +167,17 @@ public:
 
 	/** Gets the current health */
 	UFUNCTION(BlueprintCallable, Category="Health")
-	FORCEINLINE float GetCurrentHealth() const { return CurrentHealth; }
+	FORCEINLINE float GetCurrentHealth() const 
+	{ 
+		return AttributeComponent ? AttributeComponent->GetHealth() : 0.0f;
+	}
 
 	/** Gets the maximum health */
 	UFUNCTION(BlueprintCallable, Category="Health")
-	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
+	FORCEINLINE float GetMaxHealth() const 
+	{ 
+		return AttributeComponent ? AttributeComponent->GetMaxHealth() : 0.0f;
+	}
 
 	//=== Death and Respawn ===
 
@@ -208,6 +220,12 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	/** Returns AttributeComponent for health/stat management **/
+	FORCEINLINE UNexusAttributeComponent* GetAttributeComponent() const { return AttributeComponent; }
+
+	/** Returns AbilityComponent for ability management **/
+	FORCEINLINE UNexusAbilityComponent* GetAbilityComponent() const { return AbilityComponent; }
 };
 
 
